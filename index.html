@@ -3,9 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Nova Player</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <title>Fuck You Quotes</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;600;700&display=swap');
+
     * {
       margin: 0;
       padding: 0;
@@ -13,589 +14,160 @@
     }
 
     body {
-      font-family: 'Inter', sans-serif;
-      background: #050505;
-      color: #fff;
+      font-family: 'Space Grotesk', sans-serif;
+      background: #0f0f0f;
+      color: #f0f0f0;
       min-height: 100vh;
       display: flex;
+      flex-direction: column;
       align-items: center;
       justify-content: center;
-      overflow: hidden;
-      position: relative;
+      padding: 20px;
+      overflow-x: hidden;
     }
 
-    /* Animated background glow */
-    body::before {
-      content: '';
-      position: absolute;
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, #7c3aed33 0%, transparent 70%);
-      top: -200px;
-      left: -200px;
-      animation: float 12s ease-in-out infinite;
-    }
-
-    body::after {
-      content: '';
-      position: absolute;
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, #ec489933 0%, transparent 70%);
-      bottom: -150px;
-      right: -150px;
-      animation: float 15s ease-in-out infinite reverse;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translate(0, 0); }
-      50% { transform: translate(40px, 30px); }
-    }
-
-    .player {
+    .container {
+      max-width: 520px;
       width: 100%;
-      max-width: 380px;
-      background: rgba(20, 20, 25, 0.85);
-      backdrop-filter: blur(24px);
-      border-radius: 28px;
-      border: 1px solid rgba(255, 255, 255, 0.08);
-      padding: 28px;
-      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
-      position: relative;
-      z-index: 10;
-    }
-
-    /* Album Art */
-    .album-art-wrapper {
-      position: relative;
-      width: 100%;
-      aspect-ratio: 1;
-      border-radius: 20px;
-      overflow: hidden;
-      margin-bottom: 28px;
-      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.5);
-    }
-
-    .album-art {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      transition: transform 0.6s ease;
-    }
-
-    .album-art.playing {
-      animation: spin 20s linear infinite;
-    }
-
-    @keyframes spin {
-      from { transform: rotate(0deg); }
-      to { transform: rotate(360deg); }
-    }
-
-    .album-overlay {
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 50%);
-      pointer-events: none;
-    }
-
-    /* Song Info */
-    .song-info {
       text-align: center;
-      margin-bottom: 28px;
     }
 
-    .song-title {
-      font-size: 1.4rem;
-      font-weight: 600;
-      margin-bottom: 6px;
-      letter-spacing: -0.3px;
-    }
-
-    .song-artist {
-      font-size: 0.95rem;
-      color: #a1a1aa;
-      font-weight: 400;
-    }
-
-    /* Progress */
-    .progress-container {
+    h1 {
+      font-size: 2.4rem;
+      font-weight: 700;
+      letter-spacing: -1px;
       margin-bottom: 8px;
+      background: linear-gradient(135deg, #ff4d4d, #ff9f43);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
 
-    .progress-bar {
-      width: 100%;
-      height: 5px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      cursor: pointer;
+    .subtitle {
+      color: #888;
+      font-size: 0.95rem;
+      margin-bottom: 40px;
+    }
+
+    .quote-box {
+      background: #1a1a1a;
+      border: 1px solid #2a2a2a;
+      border-radius: 20px;
+      padding: 40px 30px;
+      margin-bottom: 30px;
       position: relative;
-      overflow: hidden;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
-    .progress {
-      height: 100%;
-      background: linear-gradient(90deg, #8b5cf6, #ec4899);
-      border-radius: 10px;
-      width: 0%;
-      transition: width 0.1s linear;
-      position: relative;
+    .quote-box:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 25px 50px rgba(255, 77, 77, 0.15);
     }
 
-    .progress::after {
-      content: '';
-      position: absolute;
-      right: -6px;
-      top: 50%;
-      transform: translateY(-50%);
-      width: 12px;
-      height: 12px;
-      background: #fff;
-      border-radius: 50%;
-      box-shadow: 0 0 10px rgba(236, 72, 153, 0.6);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .progress-bar:hover .progress::after {
-      opacity: 1;
-    }
-
-    .time {
-      display: flex;
-      justify-content: space-between;
-      font-size: 0.75rem;
-      color: #71717a;
-      margin-top: 8px;
-      font-variant-numeric: tabular-nums;
-    }
-
-    /* Controls */
-    .controls {
+    .quote-text {
+      font-size: 1.45rem;
+      font-weight: 600;
+      line-height: 1.5;
+      margin-bottom: 18px;
+      min-height: 90px;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 28px;
-      margin: 28px 0;
     }
 
-    .control-btn {
-      background: none;
-      border: none;
-      color: #fff;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s ease;
-    }
-
-    .control-btn:hover {
-      transform: scale(1.1);
-      color: #c4b5fd;
-    }
-
-    .control-btn:active {
-      transform: scale(0.95);
-    }
-
-    .play-btn {
-      width: 64px;
-      height: 64px;
-      background: linear-gradient(135deg, #8b5cf6, #ec4899);
-      border-radius: 50%;
-      box-shadow: 0 10px 25px rgba(139, 92, 246, 0.4);
-    }
-
-    .play-btn:hover {
-      transform: scale(1.08);
-      box-shadow: 0 12px 30px rgba(139, 92, 246, 0.55);
-      color: #fff;
-    }
-
-    .play-btn svg {
-      width: 28px;
-      height: 28px;
-    }
-
-    .control-btn svg {
-      width: 26px;
-      height: 26px;
-    }
-
-    /* Volume */
-    .volume-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-bottom: 24px;
-    }
-
-    .volume-icon {
-      color: #a1a1aa;
-      display: flex;
-    }
-
-    .volume-slider {
-      flex: 1;
-      height: 4px;
-      -webkit-appearance: none;
-      appearance: none;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 10px;
-      outline: none;
-    }
-
-    .volume-slider::-webkit-slider-thumb {
-      -webkit-appearance: none;
-      width: 14px;
-      height: 14px;
-      background: #fff;
-      border-radius: 50%;
-      cursor: pointer;
-      box-shadow: 0 0 8px rgba(255, 255, 255, 0.3);
-    }
-
-    /* Playlist */
-    .playlist {
-      border-top: 1px solid rgba(255, 255, 255, 0.06);
-      padding-top: 20px;
-    }
-
-    .playlist-title {
-      font-size: 0.8rem;
-      color: #71717a;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      margin-bottom: 14px;
-      font-weight: 500;
-    }
-
-    .playlist-item {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      padding: 12px;
-      border-radius: 14px;
-      cursor: pointer;
-      transition: background 0.2s;
-      margin-bottom: 6px;
-    }
-
-    .playlist-item:hover {
-      background: rgba(255, 255, 255, 0.05);
-    }
-
-    .playlist-item.active {
-      background: rgba(139, 92, 246, 0.15);
-    }
-
-    .playlist-item.active .playlist-song-title {
-      color: #c4b5fd;
-    }
-
-    .playlist-thumb {
-      width: 44px;
-      height: 44px;
-      border-radius: 10px;
-      object-fit: cover;
-    }
-
-    .playlist-info {
-      flex: 1;
-      min-width: 0;
-    }
-
-    .playlist-song-title {
+    .quote-author {
       font-size: 0.9rem;
+      color: #ff6b6b;
       font-weight: 500;
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
     }
 
-    .playlist-song-artist {
-      font-size: 0.78rem;
-      color: #71717a;
-      margin-top: 2px;
+    .btn {
+      background: linear-gradient(135deg, #ff4d4d, #ff6b6b);
+      color: white;
+      border: none;
+      padding: 16px 36px;
+      font-size: 1rem;
+      font-weight: 600;
+      border-radius: 50px;
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.25s ease;
+      box-shadow: 0 8px 20px rgba(255, 77, 77, 0.3);
     }
 
-    .playing-indicator {
-      display: none;
-      gap: 3px;
-      align-items: flex-end;
-      height: 16px;
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 12px 28px rgba(255, 77, 77, 0.45);
     }
 
-    .playlist-item.active .playing-indicator {
-      display: flex;
+    .btn:active {
+      transform: scale(0.98);
     }
 
-    .bar {
-      width: 3px;
-      background: #a78bfa;
-      border-radius: 2px;
-      animation: equalize 1.2s ease-in-out infinite;
+    .footer {
+      margin-top: 50px;
+      font-size: 0.8rem;
+      color: #555;
     }
 
-    .bar:nth-child(1) { height: 60%; animation-delay: 0s; }
-    .bar:nth-child(2) { height: 100%; animation-delay: 0.2s; }
-    .bar:nth-child(3) { height: 40%; animation-delay: 0.4s; }
-
-    @keyframes equalize {
-      0%, 100% { transform: scaleY(1); }
-      50% { transform: scaleY(0.4); }
+    /* small animation */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Visualizer bars at bottom */
-    .visualizer {
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 3px;
-      height: 40px;
-      margin-top: 10px;
-      opacity: 0;
-      transition: opacity 0.3s;
-    }
-
-    .visualizer.active {
-      opacity: 1;
-    }
-
-    .viz-bar {
-      width: 4px;
-      background: linear-gradient(to top, #8b5cf6, #ec4899);
-      border-radius: 2px;
-      animation: viz 0.8s ease-in-out infinite;
-    }
-
-    @keyframes viz {
-      0%, 100% { height: 8px; }
-      50% { height: 32px; }
+    .quote-box.animate {
+      animation: fadeIn 0.4s ease;
     }
   </style>
 </head>
 <body>
-  <div class="player">
-    <!-- Album Art -->
-    <div class="album-art-wrapper">
-      <img src="https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=500&h=500&fit=crop" alt="Album" class="album-art" id="albumArt">
-      <div class="album-overlay"></div>
+  <div class="container">
+    <h1>Fuck You Man</h1>
+    <p class="subtitle">Some honest quotes for the soul</p>
+
+    <div class="quote-box" id="quoteBox">
+      <div class="quote-text" id="quoteText">Loading the fuck out of this...</div>
+      <div class="quote-author" id="quoteAuthor">— Someone real</div>
     </div>
 
-    <!-- Song Info -->
-    <div class="song-info">
-      <div class="song-title" id="songTitle">Song Title</div>
-      <div class="song-artist" id="songArtist">Artist Name</div>
-    </div>
+    <button class="btn" onclick="newQuote()">Give Me Another Fuck</button>
 
-    <!-- Progress -->
-    <div class="progress-container">
-      <div class="progress-bar" id="progressBar">
-        <div class="progress" id="progress"></div>
-      </div>
-      <div class="time">
-        <span id="currentTime">0:00</span>
-        <span id="duration">0:00</span>
-      </div>
-    </div>
-
-    <!-- Controls -->
-    <div class="controls">
-      <button class="control-btn" id="prevBtn">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/></svg>
-      </button>
-
-      <button class="control-btn play-btn" id="playBtn">
-        <svg id="playIcon" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-        <svg id="pauseIcon" viewBox="0 0 24 24" fill="currentColor" style="display:none"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/></svg>
-      </button>
-
-      <button class="control-btn" id="nextBtn">
-        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/></svg>
-      </button>
-    </div>
-
-    <!-- Volume -->
-    <div class="volume-container">
-      <div class="volume-icon">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02z"/></svg>
-      </div>
-      <input type="range" class="volume-slider" id="volumeSlider" min="0" max="1" step="0.01" value="0.8">
-    </div>
-
-    <!-- Visualizer -->
-    <div class="visualizer" id="visualizer">
-      <div class="viz-bar" style="animation-delay: 0.0s"></div>
-      <div class="viz-bar" style="animation-delay: 0.1s"></div>
-      <div class="viz-bar" style="animation-delay: 0.2s"></div>
-      <div class="viz-bar" style="animation-delay: 0.3s"></div>
-      <div class="viz-bar" style="animation-delay: 0.4s"></div>
-      <div class="viz-bar" style="animation-delay: 0.5s"></div>
-      <div class="viz-bar" style="animation-delay: 0.6s"></div>
-      <div class="viz-bar" style="animation-delay: 0.1s"></div>
-      <div class="viz-bar" style="animation-delay: 0.3s"></div>
-      <div class="viz-bar" style="animation-delay: 0.5s"></div>
-    </div>
-
-    <!-- Playlist -->
-    <div class="playlist">
-      <div class="playlist-title">Up Next</div>
-      <div id="playlistItems"></div>
-    </div>
+    <p class="footer">Made with zero fucks given</p>
   </div>
 
-  <audio id="audio"></audio>
-
   <script>
-    // ====================== 
-    //  YAHAN APNE 2 SONGS DAALO
-    // ======================
-    const songs = [
-      {
-        title: "Midnight Dreams",
-        artist: "Your Artist",
-        src: "song1.mp3",          // ← apna pehla song ka path yahan
-        cover: "https://images.unsplash.com/photo-1614613535308-eb5fbd3d2c17?w=500&h=500&fit=crop"
-      },
-      {
-        title: "Neon Lights",
-        artist: "Your Artist",
-        src: "song2.mp3",          // ← apna doosra song ka path yahan
-        cover: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=500&h=500&fit=crop"
-      }
+    const quotes = [
+      { text: "Fuck the haters. They’re just mad they can’t do what you do.", author: "Unknown Legend" },
+      { text: "Just do the fucking thing. Perfect is the enemy of done.", author: "Real Talk" },
+      { text: "If they don’t fuck with your vibe, they were never meant to.", author: "Street Wisdom" },
+      { text: "Fuck excuses. Get up and make it happen.", author: "No Cap" },
+      { text: "Some days you just have to say ‘fuck it’ and keep going.", author: "Survival Mode" },
+      { text: "They said it couldn’t be done. Fuck them. Do it anyway.", author: "Rebel Energy" },
+      { text: "Stop waiting for the perfect moment. Fuck it. Start now.", author: "Action Speaks" },
+      { text: "Your only competition is who you were yesterday. Fuck the rest.", author: "Growth Mindset" },
+      { text: "If it costs you your peace, it’s too fucking expensive.", author: "Self Respect" },
+      { text: "Be so good they can’t ignore you. And if they still do? Fuck ‘em.", author: "Quiet Flex" },
+      { text: "Not everyone deserves a front row seat in your life. Fuck the noise.", author: "Boundaries" },
+      { text: "The best revenge is massive success. And a little ‘fuck you’ energy.", author: "Level Up" }
     ];
 
-    // ======================
-
-    let currentSongIndex = 0;
-    let isPlaying = false;
-
-    const audio = document.getElementById('audio');
-    const playBtn = document.getElementById('playBtn');
-    const playIcon = document.getElementById('playIcon');
-    const pauseIcon = document.getElementById('pauseIcon');
-    const prevBtn = document.getElementById('prevBtn');
-    const nextBtn = document.getElementById('nextBtn');
-    const progress = document.getElementById('progress');
-    const progressBar = document.getElementById('progressBar');
-    const currentTimeEl = document.getElementById('currentTime');
-    const durationEl = document.getElementById('duration');
-    const volumeSlider = document.getElementById('volumeSlider');
-    const albumArt = document.getElementById('albumArt');
-    const songTitle = document.getElementById('songTitle');
-    const songArtist = document.getElementById('songArtist');
-    const visualizer = document.getElementById('visualizer');
-    const playlistItems = document.getElementById('playlistItems');
-
-    // Load song
-    function loadSong(index) {
-      const song = songs[index];
-      audio.src = song.src;
-      songTitle.textContent = song.title;
-      songArtist.textContent = song.artist;
-      albumArt.src = song.cover;
-      updatePlaylistUI();
+    function newQuote() {
+      const box = document.getElementById('quoteBox');
+      box.classList.remove('animate');
+      
+      // Force reflow
+      void box.offsetWidth;
+      
+      const random = quotes[Math.floor(Math.random() * quotes.length)];
+      document.getElementById('quoteText').textContent = `"${random.text}"`;
+      document.getElementById('quoteAuthor').textContent = `— ${random.author}`;
+      
+      box.classList.add('animate');
     }
 
-    // Play / Pause
-    function togglePlay() {
-      if (isPlaying) {
-        audio.pause();
-        playIcon.style.display = 'block';
-        pauseIcon.style.display = 'none';
-        albumArt.classList.remove('playing');
-        visualizer.classList.remove('active');
-      } else {
-        audio.play();
-        playIcon.style.display = 'none';
-        pauseIcon.style.display = 'block';
-        albumArt.classList.add('playing');
-        visualizer.classList.add('active');
-      }
-      isPlaying = !isPlaying;
-    }
-
-    // Next / Prev
-    function nextSong() {
-      currentSongIndex = (currentSongIndex + 1) % songs.length;
-      loadSong(currentSongIndex);
-      if (isPlaying) audio.play();
-    }
-
-    function prevSong() {
-      currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
-      loadSong(currentSongIndex);
-      if (isPlaying) audio.play();
-    }
-
-    // Progress
-    audio.addEventListener('timeupdate', () => {
-      const { currentTime, duration } = audio;
-      if (duration) {
-        const progressPercent = (currentTime / duration) * 100;
-        progress.style.width = `${progressPercent}%`;
-        currentTimeEl.textContent = formatTime(currentTime);
-        durationEl.textContent = formatTime(duration);
-      }
-    });
-
-    progressBar.addEventListener('click', (e) => {
-      const width = progressBar.clientWidth;
-      const clickX = e.offsetX;
-      const duration = audio.duration;
-      audio.currentTime = (clickX / width) * duration;
-    });
-
-    // Volume
-    volumeSlider.addEventListener('input', (e) => {
-      audio.volume = e.target.value;
-    });
-
-    // Auto next
-    audio.addEventListener('ended', nextSong);
-
-    // Format time
-    function formatTime(seconds) {
-      const min = Math.floor(seconds / 60);
-      const sec = Math.floor(seconds % 60);
-      return `${min}:${sec < 10 ? '0' : ''}${sec}`;
-    }
-
-    // Playlist UI
-    function updatePlaylistUI() {
-      playlistItems.innerHTML = songs.map((song, index) => `
-        <div class="playlist-item ${index === currentSongIndex ? 'active' : ''}" onclick="playSong(${index})">
-          <img src="${song.cover}" class="playlist-thumb" alt="">
-          <div class="playlist-info">
-            <div class="playlist-song-title">${song.title}</div>
-            <div class="playlist-song-artist">${song.artist}</div>
-          </div>
-          <div class="playing-indicator">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-          </div>
-        </div>
-      `).join('');
-    }
-
-    function playSong(index) {
-      currentSongIndex = index;
-      loadSong(index);
-      isPlaying = false;
-      togglePlay();
-    }
-
-    // Event Listeners
-    playBtn.addEventListener('click', togglePlay);
-    nextBtn.addEventListener('click', nextSong);
-    prevBtn.addEventListener('click', prevSong);
-
-    // Init
-    audio.volume = 0.8;
-    loadSong(0);
+    // Load first quote
+    newQuote();
   </script>
 </body>
 </html>
